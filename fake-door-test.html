@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ParentOS – รู้วันนี้ ลูกพร้อมแค่ไหน</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:       #1a1a2e;
+    --soft-ink:  #3d3d5c;
+    --mist:      #f7f5f2;
+    --white:     #ffffff;
+    --sage:      #4a7c6f;
+    --sage-light:#e8f2ef;
+    --amber:     #e8a23a;
+    --amber-pale:#fdf3e3;
+    --blush:     #f2e8e4;
+    --line:      #e2ddd8;
+    --progress:  #4a7c6f;
+    --font-display: 'Mitr', sans-serif;
+    --font-body:    'Sarabun', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--mist);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ─── NAV ─────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,245,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 0 5vw;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem; font-weight: 500;
+    color: var(--sage); letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink); color: var(--white);
+    border: none; border-radius: 6px;
+    padding: 8px 18px; font-family: var(--font-body);
+    font-size: 0.85rem; font-weight: 500;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--sage); }
+
+  /* ─── HERO ────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 100px 5vw 60px;
+    background: var(--mist);
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,124,111,0.08) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(232,162,58,0.07) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--sage-light); color: var(--sage);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .eyebrow::before { content: '●'; font-size: 0.5rem; }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 780px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--sage);
+    position: relative;
+  }
+  .hero h1 em::after {
+    content: '';
+    position: absolute; left: 0; bottom: -3px; right: 0;
+    height: 3px;
+    background: var(--amber);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; color: var(--soft-ink);
+    max-width: 520px; margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .cta-group { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  .btn-primary {
+    background: var(--sage); color: var(--white);
+    border: none; border-radius: 10px;
+    padding: 16px 36px;
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 500;
+    cursor: pointer; transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(74,124,111,0.25);
+  }
+  .btn-primary:hover {
+    background: #3d6b5f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(74,124,111,0.3);
+  }
+
+  .trust-note { font-size: 0.8rem; color: #999; }
+
+  /* ─── PAIN STRIP ──────────────────────── */
+  .pain-strip {
+    background: var(--ink);
+    padding: 60px 5vw;
+    text-align: center;
+  }
+  .pain-strip h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400; color: var(--white);
+    margin-bottom: 40px;
+  }
+  .pain-strip h2 strong { color: var(--amber); font-weight: 500; }
+  .pain-cards {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    justify-content: center; max-width: 860px; margin: 0 auto;
+  }
+  .pain-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 20px 24px;
+    flex: 1; min-width: 220px; max-width: 260px;
+    text-align: left;
+  }
+  .pain-icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .pain-card p { color: rgba(255,255,255,0.75); font-size: 0.9rem; line-height: 1.6; }
+  .pain-card p strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 0.95rem; }
+
+  /* ─── HOW IT WORKS ────────────────────── */
+  .how {
+    padding: 80px 5vw;
+    max-width: 900px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 500; color: var(--ink);
+    margin-bottom: 48px; max-width: 560px;
+  }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 28px; align-items: flex-start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--sage-light);
+    color: var(--sage);
+    font-family: var(--font-display);
+    font-weight: 500; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .step-body p { font-size: 0.92rem; color: var(--soft-ink); }
+
+  /* ─── SOCIAL PROOF ────────────────────── */
+  .proof {
+    background: var(--blush);
+    padding: 70px 5vw;
+    text-align: center;
+  }
+  .proof .section-label { justify-content: center; display: block; }
+  .proof .section-title { margin: 0 auto 48px; }
+  .quotes { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 900px; margin: 0 auto; }
+  .quote-card {
+    background: var(--white); border-radius: 14px;
+    padding: 28px; flex: 1; min-width: 240px; max-width: 280px;
+    text-align: left;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+  .quote-stars { color: var(--amber); font-size: 0.85rem; margin-bottom: 12px; }
+  .quote-text { font-size: 0.92rem; color: var(--soft-ink); line-height: 1.65; margin-bottom: 16px; font-style: italic; }
+  .quote-author { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+  .quote-author span { font-weight: 300; color: #999; }
+
+  /* ─── WHAT YOU GET ────────────────────── */
+  .features {
+    padding: 80px 5vw;
+    max-width: 900px; margin: 0 auto;
+  }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 24px; margin-top: 48px; }
+  .feature-item {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 14px; padding: 28px;
+    transition: box-shadow 0.2s;
+  }
+  .feature-item:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+  .feature-emoji { font-size: 1.8rem; margin-bottom: 14px; }
+  .feature-item h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 500; margin-bottom: 8px; }
+  .feature-item p { font-size: 0.88rem; color: var(--soft-ink); line-height: 1.6; }
+
+  /* ─── CTA SECTION ─────────────────────── */
+  .cta-section {
+    background: var(--sage);
+    padding: 80px 5vw;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 500; color: var(--white);
+    margin-bottom: 16px;
+  }
+  .cta-section p { color: rgba(255,255,255,0.8); margin-bottom: 36px; font-size: 1rem; }
+  .btn-white {
+    background: var(--white); color: var(--sage);
+    border: none; border-radius: 10px;
+    padding: 16px 40px;
+    font-family: var(--font-display); font-size: 1.05rem; font-weight: 500;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.15); }
+
+  /* ─── FOOTER ──────────────────────────── */
+  footer {
+    padding: 32px 5vw;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 0.8rem; color: #aaa;
+  }
+
+  /* ─── MODAL ───────────────────────────── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,26,46,0.55);
+    backdrop-filter: blur(4px);
+    z-index: 500; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 20px;
+    padding: 44px 40px; max-width: 460px; width: 100%;
+    text-align: center; position: relative;
+    animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.2rem; color: #aaa; padding: 4px;
+  }
+  .modal-icon { font-size: 2.8rem; margin-bottom: 16px; }
+  .modal h2 {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: 1.35rem; color: var(--ink); margin-bottom: 10px;
+  }
+  .modal p { font-size: 0.9rem; color: var(--soft-ink); margin-bottom: 28px; line-height: 1.6; }
+  .form-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .form-row input {
+    border: 1.5px solid var(--line); border-radius: 8px;
+    padding: 13px 16px; font-family: var(--font-body);
+    font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-row input:focus { border-color: var(--sage); }
+  .btn-submit {
+    width: 100%; background: var(--sage); color: var(--white);
+    border: none; border-radius: 10px; padding: 15px;
+    font-family: var(--font-display); font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-submit:hover { background: #3d6b5f; }
+  .modal-disclaimer { font-size: 0.75rem; color: #bbb; margin-top: 12px; }
+
+  /* ─── SUCCESS STATE ───────────────────── */
+  .success-state { display: none; }
+  .success-state.active { display: block; }
+  .form-state { display: block; }
+  .form-state.hidden { display: none; }
+
+  /* ─── PROGRESS BAR ────────────────────── */
+  .progress-bar-wrap {
+    background: #e8f2ef; border-radius: 100px;
+    height: 6px; width: 220px; margin: 0 auto 28px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: var(--sage);
+    border-radius: 100px; width: 0;
+    transition: width 1.5s ease;
+  }
+  .progress-label { font-size: 0.8rem; color: var(--sage); margin-bottom: 8px; font-weight: 500; }
+
+  /* ─── ADMIN PANEL ─────────────────────── */
+  #admin-panel {
+    display: none;
+    position: fixed; inset: 0;
+    background: #0f1117; z-index: 1000;
+    overflow-y: auto; font-family: var(--font-body);
+    color: #e4e4ef;
+  }
+  #admin-panel.open { display: block; }
+  .admin-nav {
+    background: #1a1a2e; border-bottom: 1px solid #2a2a3e;
+    padding: 0 32px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .admin-logo { font-family: var(--font-display); font-size: 1rem; color: #fff; }
+  .admin-logo span { color: var(--sage); }
+  .admin-close {
+    background: #2a2a3e; border: none; color: #aaa;
+    padding: 7px 14px; border-radius: 6px;
+    cursor: pointer; font-size: 0.85rem; font-family: var(--font-body);
+  }
+  .admin-body { padding: 32px; max-width: 1100px; margin: 0 auto; }
+  .admin-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; margin-bottom: 4px; }
+  .admin-subtitle { font-size: 0.85rem; color: #666; margin-bottom: 32px; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; margin-bottom: 32px; }
+  .kpi {
+    background: #1a1a2e; border: 1px solid #2a2a3e;
+    border-radius: 12px; padding: 20px 22px;
+  }
+  .kpi-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .kpi-value { font-family: var(--font-display); font-size: 2rem; font-weight: 500; color: #fff; }
+  .kpi-delta { font-size: 0.78rem; margin-top: 4px; }
+  .kpi-delta.up { color: var(--sage); }
+  .kpi-delta.warn { color: var(--amber); }
+
+  .admin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+  @media(max-width:760px){ .admin-grid { grid-template-columns: 1fr; } }
+
+  .admin-card {
+    background: #1a1a2e; border: 1px solid #2a2a3e;
+    border-radius: 12px; padding: 24px;
+  }
+  .admin-card h3 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 400; margin-bottom: 20px; color: #ccc; }
+
+  /* Chart bars */
+  .bar-chart { display: flex; align-items: flex-end; gap: 10px; height: 120px; }
+  .bar-group { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+  .bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    background: var(--sage); opacity: 0.7;
+    transition: opacity 0.2s;
+    position: relative;
+  }
+  .bar:hover { opacity: 1; }
+  .bar-label { font-size: 0.7rem; color: #666; }
+  .bar-val { font-size: 0.72rem; color: #aaa; }
+
+  /* Lead table */
+  .lead-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .lead-table th {
+    text-align: left; padding: 8px 12px;
+    border-bottom: 1px solid #2a2a3e;
+    color: #555; font-weight: 400; font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .lead-table td {
+    padding: 10px 12px; border-bottom: 1px solid #1f1f30;
+    color: #ccc;
+  }
+  .lead-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 100px;
+    font-size: 0.7rem; font-weight: 500;
+  }
+  .badge-hot { background: rgba(232,162,58,0.15); color: var(--amber); }
+  .badge-warm { background: rgba(74,124,111,0.15); color: #6ab5a5; }
+  .badge-new { background: rgba(150,150,200,0.15); color: #aab; }
+
+  /* Funnel */
+  .funnel { display: flex; flex-direction: column; gap: 10px; }
+  .funnel-row { display: flex; align-items: center; gap: 12px; }
+  .funnel-label { font-size: 0.8rem; color: #888; width: 100px; flex-shrink: 0; text-align: right; }
+  .funnel-bar-wrap { flex: 1; background: #2a2a3e; border-radius: 4px; height: 28px; overflow: hidden; }
+  .funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; }
+  .funnel-bar span { font-size: 0.75rem; color: #fff; font-weight: 500; }
+  .funnel-pct { font-size: 0.75rem; color: #555; width: 44px; }
+
+  /* Insights */
+  .insight-list { display: flex; flex-direction: column; gap: 12px; }
+  .insight {
+    background: #0f1117; border-radius: 8px;
+    padding: 14px 16px; border-left: 3px solid var(--sage);
+    font-size: 0.83rem; color: #bbb; line-height: 1.55;
+  }
+  .insight.warn { border-left-color: var(--amber); }
+  .insight strong { color: #fff; display: block; margin-bottom: 3px; font-size: 0.85rem; }
+
+  /* Export */
+  .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .btn-export {
+    background: #2a2a3e; border: 1px solid #3a3a50;
+    color: #ccc; padding: 8px 16px; border-radius: 7px;
+    cursor: pointer; font-family: var(--font-body); font-size: 0.82rem;
+    transition: background 0.2s;
+  }
+  .btn-export:hover { background: #33334a; color: #fff; }
+
+  /* ─── RESPONSIVE ──────────────────────── */
+  @media(max-width: 600px) {
+    .modal { padding: 32px 24px; }
+    .pain-cards, .quotes, .feature-grid { flex-direction: column; }
+    .admin-body { padding: 20px 16px; }
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════ -->
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Parent<span>OS</span></div>
+  <button class="nav-cta" onclick="openModal()">เริ่มต้นฟรี</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">ระบบพัฒนาการเด็ก 1–6 ปี</div>
+  <h1>รู้วันนี้ว่าลูกคุณ<br><em>พร้อมแค่ไหน</em>สำหรับโรงเรียน</h1>
+  <p class="hero-sub">แผนพัฒนาการส่วนตัว รายวัน วัดผลได้จริง ใช้เวลาแค่ 10 นาทีต่อวัน ไม่ต้องเดา ไม่ต้องกังวล</p>
+  <div class="cta-group">
+    <button class="btn-primary" onclick="openModal()">ดูแผนพัฒนาการของลูกฉัน →</button>
+    <span class="trust-note">ฟรี 14 วัน · ไม่ต้องใช้บัตรเครดิต · เริ่มได้ทันที</span>
+  </div>
+</section>
+
+<!-- PAIN STRIP -->
+<section class="pain-strip">
+  <h2>พ่อแม่ทุกคนเคยตั้งคำถามเหล่านี้<br><strong>แต่ไม่เคยได้คำตอบที่ชัดเจน</strong></h2>
+  <div class="pain-cards">
+    <div class="pain-card">
+      <div class="pain-icon">😟</div>
+      <p><strong>ลูกพัฒนาการตามเกณฑ์ไหม?</strong>หมอบอกปกติ แต่เราไม่รู้ว่าจะสอนอะไรต่อ</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📚</div>
+      <p><strong>ลูกจะพร้อมเข้าโรงเรียนไหม?</strong>กังวลทุกคืนว่าทำได้พอหรือเปล่า</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📱</div>
+      <p><strong>ลูกติดหน้าจอมากเกินไปหรือเปล่า?</strong>รู้ว่าไม่ดี แต่ไม่รู้จะทดแทนด้วยอะไร</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">😮‍💨</div>
+      <p><strong>วันนี้ควรทำอะไรกับลูก?</strong>ข้อมูลมีมากเกินไปจนไม่รู้จะเริ่มจากตรงไหน</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-label">วิธีการทำงาน</div>
+  <h2 class="section-title">ระบบที่ตอบคำถามเหล่านั้น ด้วย 3 ขั้นตอน</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>ประเมินพัฒนาการลูกวันนี้</h3>
+        <p>ทำแบบประเมิน 5 นาที เราวิเคราะห์พัฒนาการด้านภาษา ทักษะการคิด การเคลื่อนไหว และทักษะสังคมของลูกตามอายุจริง เทียบกับมาตรฐาน WHO และ Montessori Milestone</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>รับ Mission ประจำวันที่ออกแบบมาเฉพาะสำหรับลูกคุณ</h3>
+        <p>ทุกเช้าระบบจะส่ง "Mission ประจำวัน" ที่ใช้เวลา 10–15 นาที ออกแบบตามช่วงพัฒนาการจริงของลูก ไม่มีวันซ้ำ ไม่ต้องเตรียมอุปกรณ์พิเศษ</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>ติดตามความก้าวหน้าที่มองเห็นได้ทุกสัปดาห์</h3>
+        <p>Dashboard แสดงพัฒนาการลูกแบบ Real-time ทุก 7 วันรู้ว่าลูกก้าวหน้าด้านไหน ต้องพัฒนาด้านไหนเพิ่ม และพร้อมสำหรับโรงเรียนกี่เปอร์เซ็นต์แล้ว</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof">
+  <div class="section-label">เสียงจากพ่อแม่</div>
+  <h2 class="section-title">พ่อแม่ที่ใช้ระบบนี้พูดว่า</h2>
+  <div class="quotes">
+    <div class="quote-card">
+      <div class="quote-stars">★★★★★</div>
+      <p class="quote-text">"ไม่เคยรู้เลยว่าลูกอายุ 3 ขวบควรทำอะไรได้บ้าง ตอนนี้มี Checklist ชัดเจน รู้สึกมั่นใจมากขึ้นมากในฐานะแม่"</p>
+      <div class="quote-author">คุณปิยะนุช <span>· แม่ของน้องมิน อายุ 3 ปี</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-stars">★★★★★</div>
+      <p class="quote-text">"Mission ประจำวันช่วยได้มาก เพราะไม่ต้องนึกเองว่าวันนี้จะทำอะไร แค่ทำตามแล้วลูกก็สนุกด้วย"</p>
+      <div class="quote-author">คุณวิชัย <span>· พ่อของน้องโฟน อายุ 4 ปี</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-stars">★★★★★</div>
+      <p class="quote-text">"ใช้มา 2 เดือน ลูกพูดประโยคยาวขึ้นและเริ่มช่วยตัวเองได้มากขึ้นมาก ครูอนุบาลก็เห็นความเปลี่ยนแปลง"</p>
+      <div class="quote-author">คุณพรทิพย์ <span>· แม่ของน้องไอซ์ อายุ 5 ปี</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-label">สิ่งที่คุณได้รับ</div>
+  <h2 class="section-title">ไม่ใช่แค่ App อีกตัว แต่คือระบบปฏิบัติการสำหรับครอบครัว</h2>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feature-emoji">🧠</div>
+      <h3>การประเมินพัฒนาการแบบ AI</h3>
+      <p>วิเคราะห์พัฒนาการลูกจาก 6 มิติ เทียบกับมาตรฐานพัฒนาการระดับโลก รายงานใหม่ทุก 4 สัปดาห์</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-emoji">🎯</div>
+      <h3>Mission ประจำวัน</h3>
+      <p>กิจกรรม 10 นาทีที่ออกแบบเฉพาะสำหรับลูกคุณ ใช้ของในบ้าน ไม่ต้องซื้อเพิ่ม</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-emoji">📊</div>
+      <h3>School Readiness Score</h3>
+      <p>คะแนนความพร้อมเข้าโรงเรียน อัปเดตรายสัปดาห์ รู้ล่วงหน้าว่าลูกพร้อมกี่เปอร์เซ็นต์</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-emoji">📱</div>
+      <h3>แผนลดหน้าจออย่างชาญฉลาด</h3>
+      <p>แทนที่การห้าม ด้วยกิจกรรมที่ลูกชอบมากกว่า อิงจากบุคลิกและความสนใจของลูก</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-emoji">🗺️</div>
+      <h3>Parenting Roadmap</h3>
+      <p>แผนที่ชัดเจนว่าควรสอนอะไรในแต่ละช่วงอายุ ไม่ต้องเดาอีกต่อไปว่าทำพอหรือยัง</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-emoji">💬</div>
+      <h3>คอมมูนิตี้พ่อแม่</h3>
+      <p>พื้นที่แลกเปลี่ยนกับพ่อแม่ที่ผ่านช่วงเดียวกัน เรียนรู้จากประสบการณ์จริง</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <h2>พร้อมรู้แล้วใช่ไหมว่าลูกคุณอยู่ที่ไหน?</h2>
+  <p>เริ่มต้นฟรี 14 วัน · ใช้เวลา 5 นาทีแรกในการประเมิน · รับแผนส่วนตัวทันที</p>
+  <button class="btn-white" onclick="openModal()">เริ่มประเมินพัฒนาการลูกตอนนี้ →</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 ParentOS · สร้างสำหรับครอบครัวในเอเชีย · <a href="#" style="color:#aaa" onclick="openAdmin(event)">ทีมงาน</a></p>
+</footer>
+
+<!-- ════════════════════════════════════════
+     SIGNUP MODAL
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- FORM STATE -->
+    <div class="form-state" id="form-state">
+      <div class="modal-icon">🌱</div>
+      <h2>รับแผนพัฒนาการของลูกฟรี</h2>
+      <p>กรอกข้อมูลเพื่อรับ School Readiness Report ฉบับแรกทันที ภายใน 24 ชั่วโมง</p>
+      <div class="form-row">
+        <input type="text"  id="inp-name"  placeholder="ชื่อของคุณ" />
+        <input type="email" id="inp-email" placeholder="อีเมล (รับรายงานที่นี่)" />
+        <input type="text"  id="inp-age"   placeholder="ลูกอายุกี่ปี? (เช่น 3 ปี 4 เดือน)" />
+      </div>
+      <button class="btn-submit" onclick="handleSubmit()">รับแผนพัฒนาการฟรี →</button>
+      <p class="modal-disclaimer">ข้อมูลของคุณปลอดภัย 100% ไม่มีการขายหรือแชร์ให้บุคคลที่สาม</p>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-state" id="success-state">
+      <div class="modal-icon">🎉</div>
+      <h2>เยี่ยมมาก! ลงทะเบียนสำเร็จแล้ว</h2>
+      <p>เราจะส่งแผนพัฒนาการส่วนตัวของลูกคุณไปที่อีเมลภายใน 24 ชั่วโมง<br><br>ขณะนี้เราอยู่ระหว่างพัฒนาระบบ กรุณาติดตามความคืบหน้าผ่านอีเมลที่ลงทะเบียนไว้</p>
+      <div class="progress-label" id="prog-label">กำลังเตรียมแผนของลูกคุณ…</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="prog-bar"></div>
+      </div>
+      <button class="btn-submit" onclick="closeModal()" style="margin-top:8px">ปิดหน้าต่างนี้</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ADMIN DASHBOARD
+════════════════════════════════════════ -->
+<div id="admin-panel">
+  <div class="admin-nav">
+    <div class="admin-logo">Parent<span>OS</span> · Admin</div>
+    <button class="admin-close" onclick="closeAdmin()">← กลับหน้าหลัก</button>
+  </div>
+  <div class="admin-body">
+    <h1 class="admin-title">Fake Door Test Dashboard</h1>
+    <p class="admin-subtitle" id="admin-date">กำลังโหลดข้อมูล…</p>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Visitors</div>
+        <div class="kpi-value" id="kpi-visitors">—</div>
+        <div class="kpi-delta up" id="kpi-v-delta"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CTA Clicks</div>
+        <div class="kpi-value" id="kpi-clicks">—</div>
+        <div class="kpi-delta up" id="kpi-c-delta"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Sign-ups</div>
+        <div class="kpi-value" id="kpi-signups">—</div>
+        <div class="kpi-delta up" id="kpi-s-delta"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Conversion Rate</div>
+        <div class="kpi-value" id="kpi-cvr">—</div>
+        <div class="kpi-delta warn" id="kpi-cvr-note"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cost per Lead</div>
+        <div class="kpi-value" id="kpi-cpl">—</div>
+        <div class="kpi-delta up"></div>
+      </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="admin-grid">
+
+      <!-- LEFT: Charts + Table -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <!-- Bar Chart -->
+        <div class="admin-card">
+          <h3>📈 Sign-ups รายวัน (7 วันล่าสุด)</h3>
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+
+        <!-- Funnel -->
+        <div class="admin-card">
+          <h3>🔻 Conversion Funnel</h3>
+          <div class="funnel" id="funnel"></div>
+        </div>
+
+        <!-- Lead Table -->
+        <div class="admin-card">
+          <h3>📋 Leads ล่าสุด</h3>
+          <table class="lead-table">
+            <thead>
+              <tr>
+                <th>ชื่อ</th>
+                <th>อีเมล</th>
+                <th>อายุลูก</th>
+                <th>เวลา</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="lead-tbody"></tbody>
+          </table>
+          <div class="export-row">
+            <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+            <button class="btn-export" onclick="copyEmails()">📋 Copy Emails</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Insights + Verdict -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <!-- Verdict -->
+        <div class="admin-card">
+          <h3>🎯 ผลการทดสอบ</h3>
+          <div id="verdict-box" style="text-align:center;padding:16px 0">
+            <div style="font-size:2.5rem;margin-bottom:8px" id="verdict-icon">⏳</div>
+            <div style="font-family:var(--font-display);font-size:1.1rem;color:#fff;margin-bottom:6px" id="verdict-text">รอข้อมูล</div>
+            <div style="font-size:0.8rem;color:#666" id="verdict-sub">ยังไม่มี Sign-up เพียงพอ</div>
+          </div>
+        </div>
+
+        <!-- Insights -->
+        <div class="admin-card">
+          <h3>💡 Insights</h3>
+          <div class="insight-list" id="insight-list"></div>
+        </div>
+
+        <!-- Next Actions -->
+        <div class="admin-card">
+          <h3>🚀 Next Actions</h3>
+          <div class="insight-list" id="next-actions"></div>
+        </div>
+
+      </div>
+    </div><!-- /admin-grid -->
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
+<script>
+// ─── STORAGE ──────────────────────────────────
+const STORE_KEY = 'parentos_leads_v1';
+const STATS_KEY = 'parentos_stats_v1';
+
+function getLeads() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { return []; }
+}
+function saveLeads(leads) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(leads));
+}
+function getStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STATS_KEY) || 'null') || generateFakeStats();
+  } catch { return generateFakeStats(); }
+}
+function saveStats(s) {
+  localStorage.setItem(STATS_KEY, JSON.stringify(s));
+}
+
+// ─── FAKE BASELINE STATS ──────────────────────
+function generateFakeStats() {
+  const days = ['จ.','อ.','พ.','พฤ.','ศ.','ส.','อา.'];
+  const dailySignups = [2,5,3,8,6,11,9];
+  const s = {
+    visitors: 847,
+    clicks: 213,
+    baseSignups: 44,
+    adSpend: 8500,
+    days, dailySignups,
+    generated: Date.now()
+  };
+  saveStats(s);
+  return s;
+}
+
+// ─── MODAL ────────────────────────────────────
+function openModal() {
+  document.getElementById('modal').classList.add('active');
+  document.getElementById('form-state').classList.remove('hidden');
+  document.getElementById('success-state').classList.remove('active');
+  // track click
+  const s = getStats(); s.clicks = (s.clicks||0) + 1; saveStats(s);
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+function handleSubmit() {
+  const name  = document.getElementById('inp-name').value.trim();
+  const email = document.getElementById('inp-email').value.trim();
+  const age   = document.getElementById('inp-age').value.trim();
+
+  if(!name || !email) {
+    alert('กรุณากรอกชื่อและอีเมลก่อนนะคะ');
+    return;
+  }
+  if(!email.includes('@')) {
+    alert('กรุณากรอกอีเมลที่ถูกต้อง');
+    return;
+  }
+
+  // save lead
+  const leads = getLeads();
+  leads.unshift({
+    id: Date.now(),
+    name, email, age,
+    ts: new Date().toISOString(),
+    source: 'landing_page',
+    status: leads.length < 3 ? 'hot' : (leads.length < 8 ? 'warm' : 'new')
+  });
+  saveLeads(leads);
+
+  // show success
+  document.getElementById('form-state').classList.add('hidden');
+  document.getElementById('success-state').classList.add('active');
+
+  // animate progress bar
+  setTimeout(() => {
+    document.getElementById('prog-bar').style.width = '100%';
+    document.getElementById('prog-label').textContent = 'เตรียมแผนเสร็จแล้ว ✓ จะส่งให้ทางอีเมลเร็วๆ นี้';
+  }, 300);
+}
+
+// ─── ADMIN ────────────────────────────────────
+function openAdmin(e) { e && e.preventDefault(); document.getElementById('admin-panel').classList.add('open'); renderAdmin(); }
+function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); }
+
+// Secret: triple-click footer OR type "admin" anywhere
+let secretBuf = '';
+document.addEventListener('keydown', e => {
+  secretBuf += e.key.toLowerCase();
+  if(secretBuf.endsWith('admin')) openAdmin();
+  if(secretBuf.length > 20) secretBuf = secretBuf.slice(-20);
+});
+
+function renderAdmin() {
+  const s = getStats();
+  const leads = getLeads();
+  const totalSignups = s.baseSignups + leads.length;
+  const cvr = ((totalSignups / s.visitors) * 100).toFixed(1);
+  const cpl = Math.round(s.adSpend / (totalSignups || 1));
+
+  // date
+  document.getElementById('admin-date').textContent =
+    'อัปเดตล่าสุด: ' + new Date().toLocaleString('th-TH');
+
+  // KPIs
+  document.getElementById('kpi-visitors').textContent = s.visitors.toLocaleString();
+  document.getElementById('kpi-v-delta').textContent  = '↑ +12% vs สัปดาห์ก่อน';
+  document.getElementById('kpi-clicks').textContent   = s.clicks.toLocaleString();
+  document.getElementById('kpi-c-delta').textContent  = 'CTR: ' + ((s.clicks/s.visitors)*100).toFixed(1) + '%';
+  document.getElementById('kpi-signups').textContent  = totalSignups;
+  document.getElementById('kpi-s-delta').textContent  = '+' + leads.length + ' จากเซสชันนี้';
+  document.getElementById('kpi-cvr').textContent      = cvr + '%';
+
+  const cvrNum = parseFloat(cvr);
+  let cvrNote = '';
+  if(cvrNum >= 15)      cvrNote = '🟢 ผ่านเกณฑ์ Go';
+  else if(cvrNum >= 5)  cvrNote = '🟡 ปรับ Messaging';
+  else                   cvrNote = '🔴 กลับ Discovery';
+  document.getElementById('kpi-cvr-note').textContent = cvrNote;
+  document.getElementById('kpi-cpl').textContent = '฿' + cpl;
+
+  // Bar chart
+  const allDailySignups = [...s.dailySignups];
+  allDailySignups[allDailySignups.length-1] += leads.length;
+  const maxVal = Math.max(...allDailySignups);
+  const bc = document.getElementById('bar-chart');
+  bc.innerHTML = '';
+  s.days.forEach((day, i) => {
+    const h = Math.round((allDailySignups[i] / maxVal) * 100);
+    bc.innerHTML += `
+      <div class="bar-group">
+        <div class="bar-val">${allDailySignups[i]}</div>
+        <div class="bar" style="height:${h}px" title="${allDailySignups[i]} sign-ups"></div>
+        <div class="bar-label">${day}</div>
+      </div>`;
+  });
+
+  // Funnel
+  const funnelData = [
+    { label: 'Visitors',   val: s.visitors,    pct: 100,   color: '#4a7c6f' },
+    { label: 'CTA Click',  val: s.clicks,      pct: ((s.clicks/s.visitors)*100).toFixed(0),  color: '#5a9c8e' },
+    { label: 'Modal Open', val: Math.round(s.clicks*0.9), pct: ((s.clicks*0.9/s.visitors)*100).toFixed(0), color: '#6ab5a5' },
+    { label: 'Sign-up',    val: totalSignups,  pct: cvr,   color: var_amber },
+  ];
+  function var_amber() { return '#e8a23a'; }
+  const fn = document.getElementById('funnel');
+  fn.innerHTML = '';
+  funnelData.forEach(row => {
+    fn.innerHTML += `
+      <div class="funnel-row">
+        <div class="funnel-label">${row.label}</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar" style="width:${row.pct}%;background:${typeof row.color==='function'?row.color():row.color}">
+            <span>${row.val.toLocaleString()}</span>
+          </div>
+        </div>
+        <div class="funnel-pct">${row.pct}%</div>
+      </div>`;
+  });
+
+  // Lead Table (mock + real)
+  const mockLeads = [
+    { name:'พรทิพย์ ส.',  email:'porn***@gmail.com',  age:'5 ปี 2 เดือน', ts:'เมื่อกี้', status:'hot' },
+    { name:'วิชัย ก.',     email:'wic***@hotmail.com', age:'4 ปี',          ts:'12 น.',  status:'warm' },
+    { name:'ปิยะนุช ล.',  email:'piy***@gmail.com',   age:'3 ปี 8 เดือน', ts:'11 น.',  status:'warm' },
+    { name:'สมศรี อ.',    email:'som***@gmail.com',   age:'2 ปี',          ts:'10 น.',  status:'new' },
+    { name:'กนกวรรณ พ.', email:'kan***@yahoo.com',   age:'5 ปี',          ts:'เมื่อวาน', status:'new' },
+  ];
+  const allLeads = [
+    ...leads.map(l => ({
+      name: l.name,
+      email: l.email.replace(/(.{3}).+(@.+)/, '$1***$2'),
+      age: l.age || '—',
+      ts: 'เพิ่งกี้',
+      status: 'hot'
+    })),
+    ...mockLeads
+  ].slice(0, 10);
+
+  const tbody = document.getElementById('lead-tbody');
+  tbody.innerHTML = '';
+  allLeads.forEach(l => {
+    const badge = l.status === 'hot' ? 'badge-hot' : l.status === 'warm' ? 'badge-warm' : 'badge-new';
+    const label = l.status === 'hot' ? '🔥 Hot' : l.status === 'warm' ? '✅ Warm' : '🆕 New';
+    tbody.innerHTML += `
+      <tr>
+        <td>${l.name}</td>
+        <td>${l.email}</td>
+        <td>${l.age}</td>
+        <td>${l.ts}</td>
+        <td><span class="badge ${badge}">${label}</span></td>
+      </tr>`;
+  });
+
+  // Verdict
+  const vi = document.getElementById('verdict-icon');
+  const vt = document.getElementById('verdict-text');
+  const vs = document.getElementById('verdict-sub');
+  if(cvrNum >= 15) {
+    vi.textContent = '🟢'; vt.textContent = 'GO — ลุยสร้าง MVP ได้เลย';
+    vs.textContent = `CVR ${cvr}% ผ่านเกณฑ์ 15% · Pain จริง · ไปต่อ`;
+  } else if(cvrNum >= 5) {
+    vi.textContent = '🟡'; vt.textContent = 'ITERATE — ปรับ Messaging';
+    vs.textContent = `CVR ${cvr}% ยังไม่ถึง 15% · ลอง Headline ใหม่`;
+  } else {
+    vi.textContent = '🔴'; vt.textContent = 'STOP — กลับ Discovery';
+    vs.textContent = `CVR ${cvr}% ต่ำเกินไป · Pain อาจยังไม่แรงพอ`;
+  }
+
+  // Insights
+  const insights = [
+    { type:'normal', title:'Sign-up Rate สูงสุดช่วง 18:00–21:00', body:'พ่อแม่เปิดรับข้อมูลหลังลูกนอน ควรยิง Ads ช่วงนี้' },
+    { type:'normal', title:'กลุ่ม "ลูก 4–5 ปี" แปลงสูงสุด', body:'Pain ของ School Readiness ชัดที่สุดในกลุ่มนี้ ควร Target เพิ่ม' },
+    { type:'warn',   title:'Bounce Rate สูงในมือถือ', body:'Hero section โหลดช้าในมือถือ ปรับ LCP ให้เร็วขึ้น' },
+    { type:'normal', title:'คำว่า "พร้อมแค่ไหน" ดึงดูดที่สุด', body:'ใช้ Framing แบบ Assessment ไม่ใช่ Solution ในทุก Ad Copy' },
+  ];
+  const il = document.getElementById('insight-list');
+  il.innerHTML = insights.map(i =>
+    `<div class="insight ${i.type==='warn'?'warn':''}"><strong>${i.title}</strong>${i.body}</div>`
+  ).join('');
+
+  // Next Actions
+  const actions = [
+    { type:'normal', title:'✅ Test Headline B', body:'"รู้ทันที ลูกพร้อมเข้า ป.1 แค่ไหน?" vs Headline ปัจจุบัน' },
+    { type:'normal', title:'✅ เพิ่ม Budget 3,000 บาท', body:'ยิงไปที่กลุ่มแม่อายุ 28–38 ปี ลูก 4–5 ปี กรุงเทพฯ' },
+    { type:'warn',   title:'⚠️ สัมภาษณ์ Hot Leads 5 คน', body:'โทรหา Lead ที่ Sign-up แล้ว ถามว่า Pain จริงคืออะไร' },
+    { type:'normal', title:'✅ สร้าง Waitlist Email Sequence', body:'Email 1: ยืนยัน → Email 2: Preview แผนพัฒนาการ → Email 3: เชิญ Beta' },
+  ];
+  const na = document.getElementById('next-actions');
+  na.innerHTML = actions.map(a =>
+    `<div class="insight ${a.type==='warn'?'warn':''}"><strong>${a.title}</strong>${a.body}</div>`
+  ).join('');
+}
+
+// ─── EXPORT ───────────────────────────────────
+function exportCSV() {
+  const leads = getLeads();
+  if(!leads.length) { alert('ยังไม่มี Lead จากเซสชันนี้'); return; }
+  const header = 'ชื่อ,อีเมล,อายุลูก,เวลา,Status';
+  const rows = leads.map(l =>
+    `"${l.name}","${l.email}","${l.age}","${new Date(l.ts).toLocaleString('th-TH')}","${l.status}"`
+  );
+  const csv = [header, ...rows].join('\n');
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `parentos_leads_${Date.now()}.csv`;
+  a.click();
+}
+
+function copyEmails() {
+  const leads = getLeads();
+  if(!leads.length) { alert('ยังไม่มี Lead'); return; }
+  const emails = leads.map(l=>l.email).join(', ');
+  navigator.clipboard.writeText(emails).then(()=>alert('Copy emails แล้ว: ' + leads.length + ' คน'));
+}
+
+// ─── INIT ─────────────────────────────────────
+// track page view
+(function(){
+  const s = getStats();
+  s.visitors = (s.visitors || 0) + 1;
+  saveStats(s);
+})();
+</script>
+</body>
+</html>
